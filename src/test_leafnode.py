@@ -3,7 +3,7 @@ import unittest
 from leafnode import LeafNode
 
 
-class TestTextNode(unittest.TestCase):
+class TestLeafNode(unittest.TestCase):
     def test_with_no_value(self):
         self.assertRaises(ValueError, LeafNode, "p", None)
 

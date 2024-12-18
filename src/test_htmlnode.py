@@ -3,7 +3,13 @@ import unittest
 from htmlnode import HTMLNode
 
 
-class TestTextNode(unittest.TestCase):
+class TestHTMLNode(unittest.TestCase):
+    def test_children_are_html_nodes(self):
+        child_node = HTMLNode("p")
+        parent_node = HTMLNode("div", children=[child_node])
+        self.assertEqual(parent_node.children[0], child_node)
+        self.assertRaises(ValueError, HTMLNode, "p", children=["t"])
+
     def test_tag_to_lower(self):
         node = HTMLNode("P")
         self.assertEqual(node.tag, node.tag.lower())

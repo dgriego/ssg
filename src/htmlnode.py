@@ -1,6 +1,10 @@
+from validators import validate_children_list
+
+
 class HTMLNode:
     def __init__(self, tag=None, value=None, children=None, props=None):
-        self.tag = tag.lower()
+        validate_children_list(children)
+        self.tag = tag.lower() if tag else tag
         self.value = value
         self.children = children
         self.props = props
