@@ -13,9 +13,9 @@ class HTMLNode:
         raise NotImplementedError()
 
     def props_to_html(self):
-        props = " "
+        props = ""
         for key, value in self.props.items():
-            props += f'{key}="{value}" '
+            props += f' {key}="{value}"'
         return props
 
     def __repr__(self):

@@ -9,7 +9,7 @@ def validate_children(children):
 
 
 def validate_value(value):
-    if not value:
+    if value is None:
         raise ValueError("Value is required")
 
 
