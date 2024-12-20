@@ -1,15 +1,4 @@
-from enum import Enum
-
-from leafnode import LeafNode
-
-
-class TextType(Enum):
-    NORMAL = "normal"
-    BOLD = "bold"
-    ITALIC = "italic"
-    CODE = "code"
-    LINK = "link"
-    IMAGE = "image"
+from enums import TextType
 
 
 class TextNode:
@@ -37,19 +26,54 @@ class TextNode:
         return f"TextNode({self.text}, {self.text_type.value}, {self.url})"
 
 
-def text_node_to_html_node(text_node):
-    match text_node.text_type:
-        case TextType.NORMAL:
-            return LeafNode(None, text_node.text)
-        case TextType.BOLD:
-            return LeafNode("b", text_node.text)
-        case TextType.ITALIC:
-            return LeafNode("i", text_node.text)
-        case TextType.CODE:
-            return LeafNode("code", text_node.text)
-        case TextType.LINK:
-            return LeafNode("a", text_node.text, {"href": text_node.url})
-        case TextType.IMAGE:
-            return LeafNode("img", "", {"src": text_node.url, "alt": text_node.text})
-        case _:
-            raise Exception("invalid text type")
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#  1.
+#  This is text with a **bolded phrase** in the middle
+#
+#  this would get broken down into 3 sections
+#  - "This is a text with a "
+#  - "bolded phrase"
+#  - " in the middle"
+#  tanslates to
+#  - leaf
+#  - leaf
+#  - leaf
+#
+#  2.
+#  This is an *italic and **bold** word*.
+#
+#  - "This is an "
+#  - "italic and **bold** word"
+#  this would translate to
+#  - leaf
+#  - parent
+#   - leaf
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
