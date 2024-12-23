@@ -1,7 +1,11 @@
 from htmlnode import HTMLNode
 from leafnode import LeafNode
 from parentnode import ParentNode
-from text_node_utilities import split_nodes_delimiter, text_node_to_html_node
+from text_node_utilities import (
+    extract_markdown_images,
+    extract_markdown_link,
+    split_nodes_delimiter,
+)
 from textnode import TextNode
 from enums import TextType, TextTypeDelimiter
 
@@ -18,11 +22,14 @@ def main():
     parent = ParentNode("div", children=[leaf, parent2])
 
     # print(split_nodes_delimiter([t2], TextTypeDelimiter.*ITALIC, TextType.ITALIC))
-    print(split_nodes_delimiter([t, t3], TextTypeDelimiter.BOLD, TextType.BOLD))
+    # print(split_nodes_delimiter([t, t3], TextTypeDelimiter.BOLD, TextType.BOLD))
     # print(text_node_to_html_node(t))
     # print(h)
     # print(leaf.to_html())
     # print(parent.to_html())
+    text = "This is text with a link [to boot dev](https://www.boot.dev) and [to youtube](https://www.youtube.com/@bootdotdev)"
+    # text = "This is text with a ![rick roll](https://i.imgur.com/aKaOqIh.gif) and ![obi wan](https://i.imgur.com/fJRm4Vk.jpeg)"
+    print(extract_markdown_link(text))
 
 
 main()

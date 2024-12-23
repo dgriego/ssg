@@ -1,3 +1,4 @@
+import re
 from warnings import warn
 from leafnode import LeafNode
 from enums import TextType, TextTypeDelimiter
@@ -44,3 +45,13 @@ def split_nodes_delimiter(old_nodes, delimiter: TextTypeDelimiter, text_type: Te
                 split_nodes.append(TextNode(sections[i], text_type))
         new_nodes.extend(split_nodes)
     return new_nodes
+
+
+def extract_markdown_images(text):
+    return re.findall(r"!\[([^\[\]]+)\]\(([https:\/\/]?.*?[jpeg|gif|jpg|png])\)", text)
+
+
+def extract_markdown_link(text):
+    return re.findall(
+        r"\[([^\[\]]+)\]\(([https:\/\/]?[www.]?.+?[.]+\w+?[\/]?.*?)\)", text
+    )
