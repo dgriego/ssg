@@ -47,6 +47,52 @@ def split_nodes_delimiter(old_nodes, delimiter: TextTypeDelimiter, text_type: Te
     return new_nodes
 
 
+def split_nodes_link(old_nodes):
+    new_nodes = []
+    for old_node in old_nodes:
+        if old_node.text_type != TextType.NORMAL:
+            new_nodes.append(old_node)
+            continue
+        split_nodes = []
+        sections = re.split(r"(\[.*?\))+", old_node.text)
+
+        if len(sections) <= 1:
+            raise ValueError("Invalid markdown, formatted section not closed")
+        for i in range(len(sections)):
+            if re.match(r"(\[.*?\))+", sections[i]):
+                alt, url = extract_markdown_link(sections[i])[0]
+                split_nodes.append(TextNode(alt, TextType.LINK, url))
+            elif sections[i] == "":
+                continue
+            else:
+                split_nodes.append(TextNode(sections[i], TextType.NORMAL))
+        new_nodes.extend(split_nodes)
+    return new_nodes
+
+
+def split_nodes_image(old_nodes):
+    new_nodes = []
+    for old_node in old_nodes:
+        if old_node.text_type != TextType.NORMAL:
+            new_nodes.append(old_node)
+            continue
+        split_nodes = []
+        sections = re.split(r"(!\[.*?\))+", old_node.text)
+
+        if len(sections) <= 1:
+            raise ValueError("Invalid markdown, formatted section not closed")
+        for i in range(len(sections)):
+            if re.match(r"(!\[.*?\))+", sections[i]):
+                alt, url = extract_markdown_images(sections[i])[0]
+                split_nodes.append(TextNode(alt, TextType.IMAGE, url))
+            elif sections[i] == "":
+                continue
+            else:
+                split_nodes.append(TextNode(sections[i], TextType.NORMAL))
+        new_nodes.extend(split_nodes)
+    return new_nodes
+
+
 def extract_markdown_images(text):
     return re.findall(r"!\[([^\[\]]+)\]\(([https:\/\/]?.*?[jpeg|gif|jpg|png])\)", text)
 

@@ -5,6 +5,7 @@ from text_node_utilities import (
     extract_markdown_images,
     extract_markdown_link,
     split_nodes_delimiter,
+    split_nodes_image,
 )
 from textnode import TextNode
 from enums import TextType, TextTypeDelimiter
@@ -19,7 +20,10 @@ def main():
     leaf2 = LeafNode("p", "wword")
     leaf3 = LeafNode("div", "stop")
     parent2 = ParentNode("div", [leaf2, leaf3], {"class": "div-wrapper", "id": "con"})
-    parent = ParentNode("div", children=[leaf, parent2])
+    node = TextNode(
+        "This is text with a link ![to boot dev](https://www.boot.dev/some.png) and ![to youtube](https://www.youtube.com/other.jpg)",
+        TextType.NORMAL,
+    )
 
     # print(split_nodes_delimiter([t2], TextTypeDelimiter.*ITALIC, TextType.ITALIC))
     # print(split_nodes_delimiter([t, t3], TextTypeDelimiter.BOLD, TextType.BOLD))
@@ -29,7 +33,7 @@ def main():
     # print(parent.to_html())
     text = "This is text with a link [to boot dev](https://www.boot.dev) and [to youtube](https://www.youtube.com/@bootdotdev)"
     # text = "This is text with a ![rick roll](https://i.imgur.com/aKaOqIh.gif) and ![obi wan](https://i.imgur.com/fJRm4Vk.jpeg)"
-    print(extract_markdown_link(text))
+    split_nodes_image([node])
 
 
 main()
